@@ -1,0 +1,8 @@
+.main-navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+  grid-area: links;
+  gap: 1.3rem;
+}
