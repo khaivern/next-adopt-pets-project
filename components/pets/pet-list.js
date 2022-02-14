@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PetItem from "./pet-item";
 
 import classes from "./pet-list.module.css";
 
 const PetList = ({ pets }) => {
-  if (pets.length === 0) {
+  if (pets && pets.length === 0) {
     return (
       <div className='center'>
         <h2>No Pets found!</h2>
@@ -12,12 +12,15 @@ const PetList = ({ pets }) => {
       </div>
     );
   }
+
   return (
-    <ul className={classes.grid}>
-      {pets.map((pet) => {
-        <PetItem />;
-      })}
-    </ul>
+    <Fragment>
+      <ul className={classes.grid}>
+        {pets.map((pet) => {
+          return <PetItem key={pet.id} pet={pet} />;
+        })}
+      </ul>
+    </Fragment>
   );
 };
 

@@ -2,17 +2,19 @@
 
 .main-layout {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(400px, 1fr));
   grid-template-areas: "svg-one links svg-two";
 
   align-items: center;
 
   .hero-dog {
     grid-area: svg-one;
+    text-align: center;
   }
 
   .hero-cat {
     grid-area: svg-two;
+    text-align: center;
   }
 }
 
