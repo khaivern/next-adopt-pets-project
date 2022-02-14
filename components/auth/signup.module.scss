@@ -1,0 +1,87 @@
+$form-primary-color: #8e9eab;
+$form-secondary-color: #eef2f3;
+
+.section {
+  width: 50%;
+  margin: 5% auto;
+
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  hr {
+    width: 80%;
+  }
+
+  .auth-card {
+    background: linear-gradient(
+      to top,
+      $form-primary-color,
+      $form-secondary-color
+    );
+  }
+  form {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+      rgba(17, 17, 26, 0.05) 0px 8px 32px;
+
+    border-radius: 16px;
+    padding: 1% 4%;
+
+    .signup-input {
+      animation: appearFromTop 0.8s ease-in;
+    }
+
+    .auth-input {
+      width: 100%;
+      margin-bottom: 0;
+
+      label {
+        font-size: 1.2rem;
+      }
+
+      input,
+      textarea {
+        padding: 0.5rem 0.5rem;
+        border-radius: 8px;
+      }
+      p {
+        margin: 0;
+        margin-top: 0.5rem;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-align: right;
+      }
+    }
+
+    .actions {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 1rem;
+      button {
+        margin: 0;
+        &:last-child {
+          font-size: 0.8rem;
+          padding-right: 0;
+        }
+      }
+    }
+  }
+}
+
+@keyframes appearFromTop {
+  0% {
+    transform: scale(0) translateY(-100px);
+  }
+  100% {
+    transform: scale(1) translateX(0);
+  }
+}

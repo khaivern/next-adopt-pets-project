@@ -1,0 +1,114 @@
+.section {
+  width: 50%;
+  margin: 5% auto;
+}
+
+.section h1 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.section hr {
+  width: 80%;
+}
+
+.section .auth-card {
+  background: -webkit-gradient(linear, left bottom, left top, from(#8e9eab), to(#eef2f3));
+  background: linear-gradient(to top, #8e9eab, #eef2f3);
+}
+
+.section form {
+  width: 70%;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+          box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  border-radius: 16px;
+  padding: 1% 4%;
+}
+
+.section form .signup-input {
+  -webkit-animation: appearFromTop 0.8s ease-in;
+          animation: appearFromTop 0.8s ease-in;
+}
+
+.section form .auth-input {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.section form .auth-input label {
+  font-size: 1.2rem;
+}
+
+.section form .auth-input input,
+.section form .auth-input textarea {
+  padding: 0.5rem 0.5rem;
+  border-radius: 8px;
+}
+
+.section form .auth-input p {
+  margin: 0;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: right;
+}
+
+.section form .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  margin-top: 1rem;
+}
+
+.section form .actions button {
+  margin: 0;
+}
+
+.section form .actions button:last-child {
+  font-size: 0.8rem;
+  padding-right: 0;
+}
+
+@-webkit-keyframes appearFromTop {
+  0% {
+    -webkit-transform: scale(0) translateY(-100px);
+            transform: scale(0) translateY(-100px);
+  }
+  100% {
+    -webkit-transform: scale(1) translateX(0);
+            transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes appearFromTop {
+  0% {
+    -webkit-transform: scale(0) translateY(-100px);
+            transform: scale(0) translateY(-100px);
+  }
+  100% {
+    -webkit-transform: scale(1) translateX(0);
+            transform: scale(1) translateX(0);
+  }
+}
+/*# sourceMappingURL=signup.module.css.map */

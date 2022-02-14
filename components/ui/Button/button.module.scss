@@ -1,0 +1,77 @@
+$button-color-start: #0f0c29;
+$button-color-mid: #302b63;
+$button-color-end: #24243e;
+
+$button-error-start: #a73737;
+$button-error-end: #7a2828;
+
+.button {
+  font: inherit;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    $button-color-start,
+    $button-color-mid,
+    $button-color-end
+  );
+  color: white;
+  cursor: pointer;
+  margin-right: 1rem;
+  text-decoration: none;
+  display: inline-block;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover,
+  :active {
+    background: lighten($button-color-mid, 20%);
+    border-color: lighten($button-color-mid, 20%);
+  }
+  &:disabled,
+  :hover:disabled,
+  :active:disabled {
+    background: #ccc;
+    color: #979797;
+    border-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.button--inverse {
+  background: transparent;
+  color: $button-color-start;
+
+  &:hover,
+  :active {
+    color: lighten($button-color-mid, 25%);
+    background: transparent;
+    border-color: transparent;
+  }
+}
+
+.button--danger {
+  background: linear-gradient(
+    to bottom,
+    $button-error-start,
+    $button-error-end
+  );
+  border-color: $button-error-end;
+
+  &:hover,
+  :active {
+    background: lighten($button-error-start, 20%);
+    border-color: lighten($button-error-start, 20%);
+  }
+}
+
+.button--small {
+  font-size: 0.8rem;
+}
+
+.button--big {
+  font-size: 1.5rem;
+}
