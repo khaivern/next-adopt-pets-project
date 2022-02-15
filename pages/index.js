@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import useAuth from "../hooks/use-auth";
 import PetList from "../components/pets/pet-list";
 import classes from "../styles/Home.module.css";
 
 export default function HomePage() {
+  useAuth();
+
   const [loadedPets, setLoadedPets] = useState([]);
 
   useEffect(() => {

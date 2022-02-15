@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import { hashPassword } from "../../../util/auth";
 import { connectToDatabase } from "../../../util/connect-to-database";
 

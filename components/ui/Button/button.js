@@ -34,7 +34,7 @@ const Button = (props) => {
   }
   return (
     <button
-      className={`${classes.button} ${
+      className={`${classes.button} ${props.className && props.className} ${
         classes[`button--${props.size || "default"}`]
       } ${props.inverse && classes["button--inverse"]} ${
         props.danger && classes["button--danger"]

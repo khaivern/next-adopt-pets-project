@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
+
 import useForm from "../../hooks/use-form";
 import useHttp from "../../hooks/use-http";
 import {
@@ -11,9 +13,13 @@ import Card from "../ui/Card/card";
 import Input from "../ui/Input/input";
 
 import classes from "./signup.module.css";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/auth-slice";
+import { useRouter } from "next/router";
 
 const Signup = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const router = useRouter();
   const { formState, inputHandler, setForm } = useForm({
     inputs: {
       email: {
@@ -53,20 +59,51 @@ const Signup = () => {
     setIsLoginMode((curr) => !curr);
   };
 
+  const dispatch = useDispatch();
+
+  const createUserRequest = async () => {
+    const { email, name, password } = formState.inputs;
+    try {
+      const resp = await sendRequest("/api/auth/signup", "POST", {
+        email: email.val,
+        name: name.val,
+        password: password.val,
+      });
+      const data = resp.data;
+
+      if (resp.error) throw new Error("Failed to create user");
+
+      setIsLoginMode(true);
+    } catch (err) {
+      error = err.message;
+      console.log(error);
+    }
+  };
+
   const authHandler = async (e) => {
     e.preventDefault();
     if (isLoginMode) {
+      const { email, password } = formState.inputs;
+
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: email.val,
+        password: password.val,
+      });
+      console.log(result);
+      if (!result.error) {
+        // redirect and store
+        console.log("sending dispatch from login component");
+        const expiration = new Date(new Date().getTime() + 30000);
+        dispatch(
+          authActions.login({
+            expiration: expiration.toISOString(),
+          })
+        );
+        router.push("/");
+      }
     } else {
-      const { email, name, password } = formState.inputs;
-      try {
-        const resp = await sendRequest("/api/auth/signup", "POST", {
-          email: email.val,
-          name: name.val,
-          password: password.val,
-        });
-        const data = resp.data;
-        console.log(data);
-      } catch (err) {}
+      createUserRequest();
     }
   };
   return (
@@ -113,10 +150,10 @@ const Signup = () => {
           />
 
           <div className={classes.actions}>
-            <Button disabled={!formState.overall}>
+            <Button type='submit' disabled={!formState.overall}>
               {isLoginMode ? "LOGIN" : "SIGNUP"}
             </Button>
-            <Button inverse onClick={switchModeHandler}>
+            <Button type='button' inverse onClick={switchModeHandler}>
               SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
             </Button>
           </div>
