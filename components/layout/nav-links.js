@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { Fragment } from "react";
 import { useSession } from "next-auth/react";
 import Button from "../ui/Button/button";
 import classes from "./nav-links.module.css";
@@ -10,36 +10,37 @@ const NavLinks = () => {
   const { data: session, status } = useSession();
   const loading = status === "loading";
 
-  console.log(session);
   const dispatch = useDispatch();
   const logoutHandler = () => {
     dispatch(authActions.logout());
   };
 
   return (
-    <ul className={classes["nav-links"]}>
-      <li>
-        <Link href='/'>ALL PETS</Link>
-      </li>
-      <li>
-        <Link href='/pet/pid'>PICK RANDOM PET</Link>
-      </li>
-      {session && !loading && (
+    <Fragment>
+      <ul className={classes["nav-links"]}>
         <li>
-          <Link href='/user/uid'>MY FAVOURITES</Link>
+          <Link href='/'>ALL PETS</Link>
         </li>
-      )}
-      {!session && !loading && (
         <li>
-          <Link href='/auth'>LOGIN</Link>
+          <Link href='/pet/pid'>PICK RANDOM PET</Link>
         </li>
-      )}
+        {session && !loading && (
+          <li>
+            <Link href='/user/uid'>MY FAVOURITES</Link>
+          </li>
+        )}
+        {!session && !loading && (
+          <li>
+            <Link href='/auth'>LOGIN</Link>
+          </li>
+        )}
+      </ul>
       {session && !loading && (
         <Button className={classes["nav-button"]} onClick={logoutHandler}>
           LOGOUT
         </Button>
       )}
-    </ul>
+    </Fragment>
   );
 };
 

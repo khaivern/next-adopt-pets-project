@@ -24,7 +24,7 @@ const useHttp = (initialLoadingState) => {
         return data;
       } catch (err) {
         setIsLoading(false);
-        setError(err.message);
+        setError(err.response.data.message);
         return {
           error: true,
         };
@@ -37,7 +37,22 @@ const useHttp = (initialLoadingState) => {
     setError();
   };
 
-  return { isLoading, error, sendRequest, clearError };
+  const generateError = (errorText) => {
+    setError(errorText);
+  };
+
+  const toggleLoading = () => {
+    setIsLoading((curr) => !curr);
+  };
+
+  return {
+    isLoading,
+    error,
+    sendRequest,
+    clearError,
+    toggleLoading,
+    generateError,
+  };
 };
 
 export default useHttp;

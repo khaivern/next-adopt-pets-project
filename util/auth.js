@@ -1,4 +1,5 @@
 import { hash, compare } from "bcryptjs";
+import connectToPetClient from "./connect-to-pet-client";
 
 export const hashPassword = async (password) => {
   try {
@@ -16,4 +17,9 @@ export const comparePassword = async (password, hashedPW) => {
   } catch (err) {
     return { error: err.message };
   }
+};
+
+export const getPetAccessToken = async () => {
+  const client = connectToPetClient();
+  return client.authenticate().then((resp) => resp.data.access_token);
 };

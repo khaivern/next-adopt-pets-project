@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(400px, 1fr));
   grid-template-areas: "svg-one links svg-two";
-
+  column-gap: 3rem;
   align-items: center;
 
   .hero-dog {

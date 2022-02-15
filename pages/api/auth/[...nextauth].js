@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { comparePassword } from "../../../util/auth";
+import { comparePassword, getPetAccessToken } from "../../../util/auth";
 import { connectToDatabase } from "../../../util/connect-to-database";
 
 export default NextAuth({
@@ -41,9 +41,12 @@ export default NextAuth({
         }
         client.close();
 
+        const accessToken = await getPetAccessToken();
+
         return {
           email: user.email,
           _id: user._id,
+          accessToken: accessToken,
         };
       },
     }),

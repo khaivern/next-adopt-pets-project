@@ -15,7 +15,7 @@ const PetItem = ({ pet }) => {
     month: "long",
     year: "numeric",
   });
-  console.log(pet.photos[0]);
+
   const petPath = `/pets/${pet.id}`;
   return (
     <li className={classes["pet-item"]}>

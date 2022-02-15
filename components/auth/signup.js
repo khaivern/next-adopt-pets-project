@@ -16,6 +16,8 @@ import classes from "./signup.module.css";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/auth-slice";
 import { useRouter } from "next/router";
+import LoadingSpinner from "../ui/LoadingSpinner/loading-spinner";
+import ErrorModal from "../ui/ErrorModal/error-modal";
 
 const Signup = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -34,7 +36,14 @@ const Signup = () => {
     overall: false,
   });
 
-  const { isLoading, error, sendRequest, clearError } = useHttp(false);
+  const {
+    isLoading,
+    error,
+    sendRequest,
+    clearError,
+    toggleLoading,
+    generateError,
+  } = useHttp(false);
 
   const switchModeHandler = () => {
     if (isLoginMode) {
@@ -69,20 +78,16 @@ const Signup = () => {
         name: name.val,
         password: password.val,
       });
-      const data = resp.data;
 
-      if (resp.error) throw new Error("Failed to create user");
-
+      if (resp.error) throw new Error(resp.message || "Failed to create user");
       setIsLoginMode(true);
-    } catch (err) {
-      error = err.message;
-      console.log(error);
-    }
+    } catch (err) {}
   };
 
   const authHandler = async (e) => {
     e.preventDefault();
     if (isLoginMode) {
+      toggleLoading();
       const { email, password } = formState.inputs;
 
       const result = await signIn("credentials", {
@@ -101,6 +106,9 @@ const Signup = () => {
           })
         );
         router.push("/");
+      } else {
+        generateError(result.error);
+        toggleLoading();
       }
     } else {
       createUserRequest();
@@ -108,6 +116,8 @@ const Signup = () => {
   };
   return (
     <section className={classes.section}>
+      {isLoading && <LoadingSpinner />}
+      {error && <ErrorModal error={error} onClear={clearError} />}
       <Card className={classes["auth-card"]}>
         <h1>LOGIN</h1>
         <hr />
