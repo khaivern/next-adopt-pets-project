@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Button from "../ui/Button/button";
 import Card from "../ui/Card/card";
 
 import classes from "./pet-item.module.css";
@@ -22,8 +23,8 @@ const PetItem = ({ pet }) => {
   };
 
   const name = pet.name.split(" ")[0];
-
   const description = shortenedDescription();
+  const tags = pet.tags.slice(0, 4);
   const status = pet.status;
   const contact = pet.contact;
   const formattedDate = new Date(pet.published_at).toLocaleDateString("en-US", {
@@ -31,6 +32,8 @@ const PetItem = ({ pet }) => {
     month: "long",
     year: "numeric",
   });
+
+  const addToFavouritesHandler = () => {};
 
   const petPath = `/pets/${pet.id}`;
   return (
@@ -60,8 +63,11 @@ const PetItem = ({ pet }) => {
               </div>
             </div>
             <div className={classes["pet-item__content--header"]}>
-              <h2>{name}</h2>
-              <p>{`${pet.age} ${pet.gender}`}</p>
+              <div className={classes["header__main"]}>
+                <h2>{name}</h2>
+                <p>{`${pet.age} ${pet.gender}`}</p>
+              </div>
+              <time>{formattedDate}</time>
             </div>
             <div className={classes["pet-item__content--description"]}>
               <p>
@@ -69,6 +75,14 @@ const PetItem = ({ pet }) => {
                   ? description
                   : "No description available. 😿 "}
               </p>
+              {tags.map((tag) => (
+                <Button key={tag}>{tag}</Button>
+              ))}
+            </div>
+            <div className={classes["pet-item__content--actions"]}>
+              <Button type='button' onClick={addToFavouritesHandler}>
+                💝 ADD TO FAVOURITES 💝{" "}
+              </Button>
             </div>
           </Card>
         </a>

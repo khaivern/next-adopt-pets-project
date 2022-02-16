@@ -1,10 +1,9 @@
 import React, { Fragment } from "react";
 import PetItem from "./pet-item";
-
+import { v4 as uuid } from "uuid";
 import classes from "./pet-list.module.css";
 
 const PetList = ({ pets }) => {
-  console.log(pets);
   if (pets && pets.length === 0) {
     return (
       <div className='center'>
@@ -13,12 +12,15 @@ const PetList = ({ pets }) => {
       </div>
     );
   }
+  if (pets && pets.length > 12) {
+    pets.pop();
+  }
 
   return (
     <Fragment>
       <ul className={classes.grid}>
         {pets.map((pet) => {
-          return <PetItem key={pet.id} pet={pet} />;
+          return <PetItem key={`${pet.id}-${uuid()}`} pet={pet} />;
         })}
       </ul>
     </Fragment>

@@ -23,18 +23,49 @@
     font-family: cursive, Arial, Helvetica, sans-serif;
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: flex-end;
     h2,
     p {
-      margin: 0.5rem 1rem;
+      margin: 0.5rem 0.8rem;
+    }
+    time {
+      margin-bottom: 0.8rem;
+      margin-right: 1rem;
     }
   }
 
   .pet-item__content--description {
     font-family: "Lato", sans-serif;
+    text-align: center;
     p {
       margin: 0;
-      padding: 0 1rem;
+      padding: 0 0.5rem;
+    }
+
+    button {
+      font-size: 1rem;
+      border-color: none;
+      background: lightgoldenrodyellow;
+      padding: 0.3rem;
+      margin: 0.3rem;
+      color: black;
+
+      &:hover {
+        border: none;
+        cursor: default;
+      }
+    }
+  }
+
+  .pet-item__content--actions {
+    button {
+      width: 100%;
+      margin-top: 1rem;
+      background: rgb(204, 111, 125);
+      &:hover {
+        background: lighten(rgb(204, 111, 125), 20%);
+        border-color: lighten(rgb(204, 111, 125), 20%);
+      }
     }
   }
 }

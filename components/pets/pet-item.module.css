@@ -31,23 +31,54 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  -webkit-box-align: baseline;
-      -ms-flex-align: baseline;
-          align-items: baseline;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
 .pet-item .pet-item__content--header h2,
 .pet-item .pet-item__content--header p {
-  margin: 0.5rem 1rem;
+  margin: 0.5rem 0.8rem;
+}
+
+.pet-item .pet-item__content--header time {
+  margin-bottom: 0.8rem;
+  margin-right: 1rem;
 }
 
 .pet-item .pet-item__content--description {
   font-family: "Lato", sans-serif;
+  text-align: center;
 }
 
 .pet-item .pet-item__content--description p {
   margin: 0;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
+}
+
+.pet-item .pet-item__content--description button {
+  font-size: 1rem;
+  border-color: none;
+  background: lightgoldenrodyellow;
+  padding: 0.3rem;
+  margin: 0.3rem;
+  color: black;
+}
+
+.pet-item .pet-item__content--description button:hover {
+  border: none;
+  cursor: default;
+}
+
+.pet-item .pet-item__content--actions button {
+  width: 100%;
+  margin-top: 1rem;
+  background: #cc6f7d;
+}
+
+.pet-item .pet-item__content--actions button:hover {
+  background: #e7bac1;
+  border-color: #e7bac1;
 }
 
 @-webkit-keyframes wiggle {
