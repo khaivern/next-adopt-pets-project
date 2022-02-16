@@ -6,6 +6,7 @@ import classes from "../styles/Home.module.css";
 import { getSession, useSession } from "next-auth/react";
 import connectToPetClient, {
   fetchAnimals,
+  fetchValidatedData,
   validatePetData,
 } from "../util/connect-to-pet-client";
 import LoadingSpinner from "../components/ui/LoadingSpinner/loading-spinner";
@@ -19,36 +20,16 @@ export default function HomePage({ pets }) {
   const [loadingStatus, setLoadingStatus] = useState("Fetching Pets...");
   const [page, setPage] = useState(1);
   useEffect(() => {
-    const fetchWhenDirtyData = async (petData) => {
-      if (petData && petData.length !== 0) {
-        let localPage = page; // needed because react batches state update
-        let needRefetch = !validatePetData(petData);
-
-        let latestPetData;
-        while (needRefetch) {
-          setLoadingStatus("Missing data, refetching...🙄");
-          latestPetData = await fetchAnimals(session, localPage + 1);
-          localPage++;
-          needRefetch = !validatePetData(latestPetData);
-        }
-        setLoadingStatus("Fully done with fetch & validation 😊");
-
-        petDataIsValidated = true;
-        setPage(localPage);
-        setIsLoading(false);
-        setLoadedPets(latestPetData || petData);
-      }
-    };
     const fetchData = async () => {
-      const petData = await fetchAnimals(session, page);
-      setLoadingStatus("Fetched, off to validate 😨");
-      return Promise.resolve(petData);
+      const { cleanPetData, page } = await fetchValidatedData(session, pets);
+      setPage(page);
+      setLoadedPets(cleanPetData);
+      setLoadingStatus("Fetched Completed");
+      setIsLoading(false);
     };
-    if (!petDataIsValidated) {
-      fetchData().then((petData) => fetchWhenDirtyData(petData));
-    }
+    fetchData();
   }, [pets, session, page]);
-
+  console.log(page);
   return (
     <section className={classes.section}>
       <h1>Browse all</h1>

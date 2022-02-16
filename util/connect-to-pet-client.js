@@ -32,20 +32,30 @@ export const fetchAnimals = async (session, page = 1) => {
   }
 };
 
-export const validatePetData = (pets) => {
-  console.log("validate func");
-  let error = 0;
-  for (let pet of pets) {
-    console.log("num of errors", error);
-    if (error >= 4) {
-      return false;
+export const fetchValidatedData = async (session, unsanitizedData = []) => {
+  const cleanPetData = [];
+  let page = 1;
+  while (cleanPetData.length < 12) {
+    const petResults = await fetchAnimals(session, page);
+    if (!petResults) {
+      cleanPetData = unsanitizedData;
+      return { cleanPetData, page };
     }
-    let validName = pet.name.replace(/[^a-zA-Z]/g, "").length !== 0;
-    if (!pet.description || !pet.photos[0] || !validName) {
-      error++;
+    for (let pet of petResults) {
+      let validName = pet.name.replace(/[^a-zA-Z]/g, "").length !== 0;
+      if (
+        pet.description &&
+        pet.photos[0] &&
+        validName &&
+        cleanPetData.length < 12
+      ) {
+        cleanPetData.push(pet);
+      }
     }
+    page++;
   }
-  return true;
+
+  return { cleanPetData, page };
 };
 
 export default connectToPetClient;
