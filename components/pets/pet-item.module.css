@@ -1,3 +1,7 @@
+.pet-item .pet-item__card {
+  height: 100%;
+}
+
 .pet-item .wrapper {
   overflow: hidden;
 }
@@ -23,6 +27,20 @@
           animation: wiggle 250ms 3;
 }
 
+.pet-item .pet-item__content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: calc(100% - 300px);
+}
+
 .pet-item .pet-item__content--header {
   font-family: cursive, Arial, Helvetica, sans-serif;
   display: -webkit-box;
@@ -42,7 +60,7 @@
 }
 
 .pet-item .pet-item__content--header time {
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5rem;
   margin-right: 1rem;
 }
 
