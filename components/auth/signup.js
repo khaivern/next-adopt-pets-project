@@ -116,7 +116,11 @@ const Signup = () => {
   };
   return (
     <section className={classes.section}>
-      {isLoading && <LoadingSpinner />}
+      {isLoading && (
+        <LoadingSpinner
+          loadingText={isLoginMode ? "Loggin ya in.." : "Creating your account"}
+        />
+      )}
       {error && <ErrorModal error={error} onClear={clearError} />}
       <Card className={classes["auth-card"]}>
         <h1>LOGIN</h1>

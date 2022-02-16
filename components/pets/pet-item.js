@@ -7,7 +7,23 @@ import classes from "./pet-item.module.css";
 
 // layout="responsive"
 const PetItem = ({ pet }) => {
-  const description = pet.description;
+  const shortenedDescription = () => {
+    const description = new DOMParser().parseFromString(
+      pet.description,
+      "text/html"
+    ).documentElement.textContent;
+    const maxLength = 80;
+    let trimmedString = description.substring(0, maxLength);
+    trimmedString = trimmedString.substring(
+      0,
+      Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))
+    );
+    return trimmedString + " ...";
+  };
+
+  const name = pet.name.split(" ")[0];
+
+  const description = shortenedDescription();
   const status = pet.status;
   const contact = pet.contact;
   const formattedDate = new Date(pet.published_at).toLocaleDateString("en-US", {
@@ -22,17 +38,37 @@ const PetItem = ({ pet }) => {
       <Link href={petPath}>
         <a>
           <Card>
-            <div className={classes["pet-item__image"]}>
-              {/* <Image
-                src={pet.photos[0].medium}
-                alt={pet.gender + " photo of " + pet.name}
-                width={300}
-                height={200}
-              /> */}
+            <div className={classes.wrapper}>
+              <div className={classes["pet-item__image"]}>
+                {pet.photos[0] && (
+                  <img
+                    src={pet.photos[0].large}
+                    alt={pet.gender + " photo of " + name}
+                    width={320}
+                    height={320}
+                  />
+                )}
+                {!pet.photos[0] && (
+                  <img
+                    src='images/notfound.png'
+                    alt='No image provided'
+                    width={280}
+                    height={280}
+                    style={{ marginLeft: "0.9rem" }}
+                  />
+                )}
+              </div>
             </div>
             <div className={classes["pet-item__content--header"]}>
-              <h2>{pet.name}</h2>
+              <h2>{name}</h2>
               <p>{`${pet.age} ${pet.gender}`}</p>
+            </div>
+            <div className={classes["pet-item__content--description"]}>
+              <p>
+                {description !== "..."
+                  ? description
+                  : "No description available. 😿 "}
+              </p>
             </div>
           </Card>
         </a>

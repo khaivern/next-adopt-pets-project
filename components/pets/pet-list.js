@@ -4,6 +4,7 @@ import PetItem from "./pet-item";
 import classes from "./pet-list.module.css";
 
 const PetList = ({ pets }) => {
+  console.log(pets);
   if (pets && pets.length === 0) {
     return (
       <div className='center'>
