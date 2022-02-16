@@ -38,9 +38,9 @@ const PetItem = ({ pet }) => {
   const petPath = `/pets/${pet.id}`;
   return (
     <li className={classes["pet-item"]}>
-      <Link href={petPath}>
-        <a>
-          <Card>
+      <Card className={classes["pet-item__card"]}>
+        <Link href={petPath}>
+          <a>
             <div className={classes.wrapper}>
               <div className={classes["pet-item__image"]}>
                 {pet.photos[0] && (
@@ -62,31 +62,33 @@ const PetItem = ({ pet }) => {
                 )}
               </div>
             </div>
-            <div className={classes["pet-item__content--header"]}>
-              <div className={classes["header__main"]}>
-                <h2>{name}</h2>
-                <p>{`${pet.age} ${pet.gender}`}</p>
-              </div>
-              <time>{formattedDate}</time>
+          </a>
+        </Link>
+        <div className={classes["pet-item__content"]}>
+          <div className={classes["pet-item__content--header"]}>
+            <div className={classes["header__main"]}>
+              <h2>{name}</h2>
+              <p>{`${pet.age} ${pet.gender}`}</p>
             </div>
-            <div className={classes["pet-item__content--description"]}>
-              <p>
-                {description !== "..."
-                  ? description
-                  : "No description available. 😿 "}
-              </p>
-              {tags.map((tag) => (
-                <Button key={tag}>{tag}</Button>
-              ))}
-            </div>
-            <div className={classes["pet-item__content--actions"]}>
-              <Button type='button' onClick={addToFavouritesHandler}>
-                💝 ADD TO FAVOURITES 💝{" "}
-              </Button>
-            </div>
-          </Card>
-        </a>
-      </Link>
+            <time>{formattedDate}</time>
+          </div>
+          <div className={classes["pet-item__content--description"]}>
+            <p>
+              {description !== "..."
+                ? description
+                : "No description available. 😿 "}
+            </p>
+            {tags.map((tag) => (
+              <Button key={tag}>{tag}</Button>
+            ))}
+          </div>
+          <div className={classes["pet-item__content--actions"]}>
+            <Button type='button' onClick={addToFavouritesHandler}>
+              💝 ADD TO FAVOURITES 💝{" "}
+            </Button>
+          </div>
+        </div>
+      </Card>
     </li>
   );
 };

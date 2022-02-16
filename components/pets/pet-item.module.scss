@@ -1,4 +1,7 @@
 .pet-item {
+  .pet-item__card {
+    height: 100%;
+  }
   .wrapper {
     overflow: hidden;
   }
@@ -17,6 +20,14 @@
     &:hover {
       animation: wiggle 250ms 3;
     }
+  }
+
+  .pet-item__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: calc(100% - 300px);
   }
 
   .pet-item__content--header {
