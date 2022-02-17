@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,KAAK,EAAE,GAAG;EACV,MAAM,EAAE,gBAAgB;EACxB,UAAU,EAAE,0BAA0B;CAUvC;;AAbD,AAKE,KALG,CAKH,EAAE,CAAC;EACD,WAAW,EAAE,IAAI;CAClB;;AAPH,AASE,KATG,CASH,MAAM,CAAC;EACL,KAAK,EAAE,IAAI;EACX,UAAU,EAAE,MAAM;CACnB",
+    "sources": [
+        "pet-content.module.scss"
+    ],
+    "names": [],
+    "file": "pet-content.module.css"
+}

@@ -1,3 +1,18 @@
+.font-style__primary {
+  text-align: center;
+  font-weight: bold;
+  font-size: 11.5rem;
+  text-transform: uppercase;
+  color: #e0614b;
+  font-family: "Luckiest Guy";
+  letter-spacing: 10px;
+  text-shadow: -6px -6px #2d3033, -5px -5px #2d3033, -4px -4px #2d3033, -3px -3px #2d3033, -2px -2px #2d3033, -1px -1px #2d3033, 1px 1px #2d3033, 2px 2px #2d3033, 3px 3px #2d3033, 4px 4px #2d3033, 5px 5px #2d3033, 6px 6px #2d3033, 7px 7px #2d3033, 8px 8px #2d3033, 9px 9px #2d3033, 10px 10px #2d3033, 11px 11px #2d3033, 12px 12px #2d3033, 13px 13px #2d3033, 14px 14px #2d3033, 15px 15px #2d3033, 16px 16px #2d3033, 17px 17px #2d3033, 18px 18px #2d3033, 19px 19px #2d3033, 20px 20px #2d3033, 21px 21px #2d3033, 22px 22px #2d3033, 23px 23px #2d3033, 24px 24px #2d3033, 25px 25px #2d3033, 26px 26px #2d3033, 27px 27px #2d3033, 25px 25px #2d3033, 28px 28px #2d3033, 29px 29px #2d3033, 30px 30px #2d3033, 31px 31px #2d3033, 32px 32px #2d3033, 33px 33px #2d3033, 34px 34px #2d3033, 35px 35px #2d3033, 36px 36px #2d3033, 37px 37px #2d3033, 38px 38px #2d3033, 39px 39px #2d3033, 40px 40px;
+  width: 100%;
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+  margin: 0;
+}
+
 .main-layout {
   display: -ms-grid;
   display: grid;

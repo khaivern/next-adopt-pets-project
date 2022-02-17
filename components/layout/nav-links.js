@@ -21,9 +21,6 @@ const NavLinks = () => {
         <li>
           <Link href='/'>ALL PETS</Link>
         </li>
-        <li>
-          <Link href='/pet/pid'>PICK RANDOM PET</Link>
-        </li>
         {session && !loading && (
           <li>
             <Link href='/user/uid'>MY FAVOURITES</Link>

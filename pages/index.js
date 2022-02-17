@@ -1,17 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { getSession, useSession } from "next-auth/react";
 
 import useAuth from "../hooks/use-auth";
-import PetList from "../components/pets/pet-list";
-import classes from "../styles/Home.module.css";
-import { getSession, useSession } from "next-auth/react";
 import connectToPetClient, {
-  fetchAnimals,
   fetchValidatedData,
-  validatePetData,
 } from "../util/connect-to-pet-client";
+import PetList from "../components/pets/pet-list";
 import LoadingSpinner from "../components/ui/LoadingSpinner/loading-spinner";
+import classes from "../styles/Home.module.css";
+import Button from "../components/ui/Button/button";
 
-let petDataIsValidated = false;
 export default function HomePage({ pets }) {
   useAuth();
   const { data: session, status } = useSession();
@@ -29,12 +27,21 @@ export default function HomePage({ pets }) {
     };
     fetchData();
   }, [pets, session, page]);
-  console.log(page);
+
+  const loadNextPageHandler = () => {};
+
   return (
     <section className={classes.section}>
       <h1>Browse all</h1>
       {isLoading && <LoadingSpinner loadingText={loadingStatus} />}
       {!isLoading && <PetList pets={loadedPets} />}
+      <Button
+        className={classes["next--page__button"]}
+        onClick={loadNextPageHandler}
+        inverse
+      >
+        Load Next Page
+      </Button>
     </section>
   );
 }

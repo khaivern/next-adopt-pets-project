@@ -19,7 +19,7 @@ const PetItem = ({ pet }) => {
       0,
       Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))
     );
-    return trimmedString + " ...";
+    return trimmedString + " ➡";
   };
 
   const name = pet.name.split(" ")[0];

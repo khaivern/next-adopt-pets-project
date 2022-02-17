@@ -1,0 +1,7 @@
+.card {
+  margin-top: 5rem;
+  background: -webkit-gradient(linear, left top, left bottom, from(#e6dada), to(#274046));
+  background: linear-gradient(to bottom, #e6dada, #274046);
+  z-index: 100;
+}
+/*# sourceMappingURL=pet-detail.module.css.map */
