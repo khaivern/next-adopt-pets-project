@@ -63,16 +63,20 @@ export const fetchSingleAnimal = async (session, id) => {
 export const fetchAnimals = async (session, page = 1) => {
   if (session && session.user && session.user.accessToken) {
     const client = connectToPetClient(session.user.accessToken);
-    return await getAnimals(page, 12, client);
+    return await getAnimals(page, 20, client);
   } else {
     const client = connectToPetClient();
-    return await getAnimals(page, 12, client);
+    return await getAnimals(page, 20, client);
   }
 };
 
-export const fetchValidatedData = async (session, unsanitizedData = []) => {
+export const fetchValidatedData = async (
+  session,
+  unsanitizedData = [],
+  currPage = 1
+) => {
   const cleanPetData = [];
-  let page = 1;
+  let page = currPage;
   while (cleanPetData.length < 12) {
     const petResults = await fetchAnimals(session, page);
     if (!petResults) {

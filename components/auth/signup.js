@@ -172,7 +172,18 @@ const Signup = () => {
             </Button>
           </div>
         </form>
-        <pre>{JSON.stringify(formState, null, 2)}</pre>
+
+        <pre>
+          {JSON.stringify(
+            {
+              message: "Testing Account",
+              email: "admin@gmail.com",
+              password: "1234",
+            },
+            null,
+            2
+          )}
+        </pre>
       </Card>
     </section>
   );

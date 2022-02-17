@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import Button from "../ui/Button/button";
@@ -8,6 +8,8 @@ import classes from "./pet-item.module.css";
 
 // layout="responsive"
 const PetItem = ({ pet }) => {
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
   const shortenedDescription = () => {
     const description = new DOMParser().parseFromString(
       pet.description,
@@ -25,8 +27,6 @@ const PetItem = ({ pet }) => {
   const name = pet.name.split(" ")[0];
   const description = shortenedDescription();
   const tags = pet.tags.slice(0, 4);
-  const status = pet.status;
-  const contact = pet.contact;
   const formattedDate = new Date(pet.published_at).toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
@@ -82,11 +82,13 @@ const PetItem = ({ pet }) => {
               <Button key={tag}>{tag}</Button>
             ))}
           </div>
-          <div className={classes["pet-item__content--actions"]}>
-            <Button type='button' onClick={addToFavouritesHandler}>
-              💝 ADD TO FAVOURITES 💝{" "}
-            </Button>
-          </div>
+          {session && !loading && (
+            <div className={classes["pet-item__content--actions"]}>
+              <Button type='button' onClick={addToFavouritesHandler}>
+                💝 ADD TO FAVOURITES 💝{" "}
+              </Button>
+            </div>
+          )}
         </div>
       </Card>
     </li>

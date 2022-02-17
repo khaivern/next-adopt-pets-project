@@ -14,14 +14,15 @@
 }
 
 .section .next--page__button {
-  background-color: #e2a7fa;
+  color: #2d3033;
+  background-color: #e0614b;
   font-size: 2rem;
   width: 100%;
   margin: 2.5rem 0;
 }
 
 .section .next--page__button:hover {
-  color: white;
-  background-color: #d277f7;
+  background-color: #e78777;
+  color: #454a4e;
 }
 /*# sourceMappingURL=Home.module.css.map */

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getSession, useSession } from "next-auth/react";
 
 import useAuth from "../hooks/use-auth";
@@ -15,20 +15,42 @@ export default function HomePage({ pets }) {
   const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(true);
   const [loadedPets, setLoadedPets] = useState([]);
-  const [loadingStatus, setLoadingStatus] = useState("Fetching Pets...");
+  const [loadingStatus, setLoadingStatus] = useState("Fetching Latest Pets...");
   const [page, setPage] = useState(1);
+  const fetchData = useCallback(
+    async (page) => {
+      setLoadingStatus("Pets are being cleaned");
+      const { cleanPetData, page: currPage } = await fetchValidatedData(
+        session,
+        pets,
+        page
+      );
+      setPage(currPage);
+      return cleanPetData;
+    },
+    [pets, session]
+  );
   useEffect(() => {
-    const fetchData = async () => {
-      const { cleanPetData, page } = await fetchValidatedData(session, pets);
-      setPage(page);
-      setLoadedPets(cleanPetData);
-      setLoadingStatus("Fetched Completed");
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [pets, session, page]);
+    fetchData()
+      .then((pets) => {
+        return setLoadedPets(pets);
+      })
+      .then((res) => setIsLoading(false));
+  }, [pets, fetchData]);
 
-  const loadNextPageHandler = () => {};
+  const loadNextPageHandler = () => {
+    setLoadingStatus("Sanitizing new data...");
+    setIsLoading(true);
+    fetchData(page)
+      .then((pets) => {
+        return setLoadedPets(pets);
+      })
+      .then((res) => setIsLoading(false))
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  };
 
   return (
     <section className={classes.section}>
