@@ -86,7 +86,7 @@ async function handler(req, res) {
     { $set: { favouritePets: updatedFavPetList } }
   );
 
-  return res.status(200).json({
+  return res.status(201).json({
     message: "Favourite list has been updated",
     result: result[0],
   });

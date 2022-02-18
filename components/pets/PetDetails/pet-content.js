@@ -18,7 +18,7 @@ const PetContent = ({ description, date, status, onFavButtonClick }) => {
       <time>{formattedDate}</time>
       <h3>Current Status</h3>
       <p>{status}</p>
-      <Button danger onClick={onFavButtonClick()}>
+      <Button danger onClick={onFavButtonClick}>
         ADD TO FAVOURITES
       </Button>
     </Card>

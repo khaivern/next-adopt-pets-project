@@ -2,6 +2,8 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { notiActions } from "../../store/notification-slice";
 import Button from "../ui/Button/button";
 import Card from "../ui/Card/card";
 
@@ -20,6 +22,7 @@ export const sendPetData = async (petData) => {
 
 // layout="responsive"
 const PetItem = ({ pet }) => {
+  const dispatch = useDispatch();
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const shortenedDescription = () => {
@@ -46,6 +49,13 @@ const PetItem = ({ pet }) => {
   });
 
   const addToFavouritesHandler = () => {
+    dispatch(
+      notiActions.createNotification({
+        title: "Sending",
+        message: "this pet data is being sent to your favourite's list",
+        status: "pending",
+      })
+    );
     const petData = {
       image: pet.photos[0].large,
       name: name,
@@ -56,6 +66,24 @@ const PetItem = ({ pet }) => {
       age: pet.age,
     };
     const { status, data } = sendPetData(petData);
+    if (status !== 201) {
+      dispatch(
+        notiActions.createNotification({
+          title: "Not Good 😥",
+          message:
+            "the pet managed to escape our grip sadly... please try again later",
+          status: "error",
+        })
+      );
+    } else {
+      dispatch(
+        notiActions.createNotification({
+          title: "Success ✔",
+          message: "The pet data is now stored safely",
+          status: "success",
+        })
+      );
+    }
   };
 
   const petPath = `/pets/${pet.id}`;

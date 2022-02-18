@@ -1,0 +1,146 @@
+@import "../../../styles/_variables.scss";
+
+.main__card {
+  background-color: #00b09b;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(20rem, 1fr));
+  grid-template-areas: "Title Subtitle Action";
+  column-gap: 2rem;
+  position: relative;
+  .name {
+    grid-area: Title;
+    z-index: 100;
+    display: flex;
+    width: 100%;
+    background-color: rgba(26, 28, 29, 0.301);
+    justify-content: center;
+    align-items: flex-end;
+  }
+  h2 {
+    color: white;
+    text-shadow: 2px 2px 4px black, 5px 5px 10px black, 0px 10px 15px black;
+    padding-bottom: 2rem;
+    margin: 0;
+    animation: hop 5s linear 0s 2;
+  }
+
+  .wrapper {
+    height: 17rem;
+    width: 100%;
+    grid-area: Title;
+
+    img {
+      height: 100%;
+      width: 100%;
+
+      object-fit: scale-down;
+    }
+  }
+
+  .content {
+    background: rgba(255, 249, 168, 0.671);
+
+    h3 {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 2rem;
+      margin: 0;
+      padding: 0.5rem 0.5rem 0 1rem;
+
+      &:nth-child(1) {
+        text-align: center;
+        box-shadow: 2px 2px 2px 2px black;
+        color: white;
+        background: rgba(0, 0, 0, 0.712);
+      }
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4),
+      &:nth-child(5) {
+        background: -webkit-linear-gradient(#141e30, #243b55);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      &:nth-child(2),
+      &:nth-child(4) {
+        text-align: right;
+      }
+    }
+  }
+
+  .actions {
+    background: rgba(255, 249, 168, 0.671);
+    h3 {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 2rem;
+      margin: 0;
+      padding: 0.5rem 0.5rem 0 1rem;
+      text-align: center;
+      box-shadow: 2px 2px 2px 2px black;
+      color: white;
+      background: rgba(0, 0, 0, 0.712);
+    }
+
+    a {
+      width: 100%;
+      text-align: center;
+      background: $secondary-background-color;
+      margin-top: 3rem;
+      color: rgb(4, 54, 8);
+      font-size: 1.5rem;
+      font-weight: bold;
+      height: 4rem;
+      padding-top: 1rem;
+
+      &:hover {
+        border-color: lighten($secondary-background-color, 10%);
+        background-color: lighten($secondary-background-color, 10%);
+        color: darken($secondary-background-color, 30%);
+      }
+    }
+    button {
+      width: 100%;
+      margin-top: 2rem;
+      height: 2.5rem;
+    }
+  }
+}
+
+@keyframes hop {
+  0% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-10%);
+  }
+  20% {
+    transform: translateX(-20%);
+  }
+  30% {
+    transform: translateX(-10%);
+  }
+  40% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(10%);
+  }
+  60% {
+    transform: translateX(20%);
+  }
+  70% {
+    transform: translateX(10%);
+  }
+  80% {
+    transform: translateX(0%);
+  }
+  90% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

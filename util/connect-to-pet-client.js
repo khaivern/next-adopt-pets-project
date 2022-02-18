@@ -20,18 +20,13 @@ async function getAnimals(page, limit, client) {
   }
 }
 
-function validatePetData(pet, results) {
-  const resultsNotExceeded = results.length < 12;
+export function validatePetData(pet) {
   const descriptionIsValid = !!pet.description;
   const photosIsValid = !!pet.photos[0];
   const nameIsValid = pet.name.replace(/[^a-zA-Z]/g, "").length !== 0;
   const tagsAtLeastOne = pet.tags.length > 0;
   const overallIsValid =
-    resultsNotExceeded &&
-    descriptionIsValid &&
-    photosIsValid &&
-    nameIsValid &&
-    tagsAtLeastOne;
+    descriptionIsValid && photosIsValid && nameIsValid && tagsAtLeastOne;
   return overallIsValid;
 }
 
@@ -61,28 +56,28 @@ export const fetchSingleAnimal = async (session, id) => {
 export const fetchAnimals = async (session, page = 1) => {
   if (session && session.user && session.user.accessToken) {
     const client = connectToPetClient(session.user.accessToken);
-    return await getAnimals(page, 20, client);
+    return await getAnimals(page, 100, client);
   } else {
     const client = connectToPetClient();
-    return await getAnimals(page, 20, client);
+    return await getAnimals(page, 100, client);
   }
 };
 
 export const fetchValidatedData = async (
   session,
-  unsanitizedData = [],
+  incomplete = [],
   currPage = 1
 ) => {
-  const cleanPetData = [];
+  const cleanPetData = incomplete;
   let page = currPage;
   while (cleanPetData.length < 12) {
     const petResults = await fetchAnimals(session, page);
-    if (!petResults) {
-      cleanPetData = unsanitizedData;
-      return { cleanPetData, page };
-    }
+
+    if (petResults.error) return { cleanPetData: incomplete, page };
+
     for (let pet of petResults) {
-      if (validatePetData(pet, cleanPetData)) {
+      if (cleanPetData.length >= 12) break;
+      if (validatePetData(pet)) {
         cleanPetData.push(pet);
       }
     }

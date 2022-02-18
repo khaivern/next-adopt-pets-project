@@ -23,7 +23,7 @@ const NavLinks = () => {
         </li>
         {session && !loading && (
           <li>
-            <Link href='/user/uid'>MY FAVOURITES</Link>
+            <Link href={`/user/${session.user._id}`}>MY FAVOURITES</Link>
           </li>
         )}
         {!session && !loading && (

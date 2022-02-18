@@ -9,8 +9,11 @@ import PetContent from "../../components/pets/PetDetails/pet-content";
 
 import classes from "./pet-detail.module.css";
 import { sendPetData } from "../../components/pets/pet-item";
+import { useDispatch } from "react-redux";
+import { notiActions } from "../../store/notification-slice";
 
 const PetDetailPage = () => {
+  const dispatch = useDispatch();
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const { pid } = useRouter().query;
@@ -33,6 +36,13 @@ const PetDetailPage = () => {
   }, [pid, session]);
 
   const favButtonHandler = () => {
+    dispatch(
+      notiActions.createNotification({
+        title: "Sending",
+        message: "this pet data is being sent to your favourite's list",
+        status: "pending",
+      })
+    );
     const name = loadedPet.name.split(" ")[0];
     const petData = {
       image: loadedPet.photos[0].large,
@@ -43,7 +53,26 @@ const PetDetailPage = () => {
       gender: loadedPet.gender,
       age: loadedPet.age,
     };
+
     const { status, data } = sendPetData(petData);
+    if (status !== 201) {
+      dispatch(
+        notiActions.createNotification({
+          title: "Not Good 😥",
+          message:
+            "the pet managed to escape our grip sadly... please try again later",
+          status: "error",
+        })
+      );
+    } else {
+      dispatch(
+        notiActions.createNotification({
+          title: "Success ✔",
+          message: "The pet data is now stored safely",
+          status: "success",
+        })
+      );
+    }
   };
 
   if (!loadedPet || isLoading || loading) {

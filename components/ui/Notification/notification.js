@@ -21,13 +21,22 @@ const Notification = (props) => {
 
   const cssClasses = `${classes.notification} ${statusClasses}`;
 
-  return ReactDOM.createPortal(
-    <div className={cssClasses}>
-      <h2>{title}</h2>
-      <p>{message}</p>
-    </div>,
-    document.querySelector("#notification")
-  );
+  if (typeof window !== "undefined") {
+    return ReactDOM.createPortal(
+      <div className={cssClasses}>
+        <h2>{title}</h2>
+        <p>{message}</p>
+      </div>,
+      document.querySelector("#notification")
+    );
+  } else {
+    return (
+      <div className={cssClasses}>
+        <h2>{title}</h2>
+        <p>{message}</p>
+      </div>
+    );
+  }
 };
 
 export default Notification;

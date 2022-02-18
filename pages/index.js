@@ -4,39 +4,58 @@ import { getSession, useSession } from "next-auth/react";
 import useAuth from "../hooks/use-auth";
 import connectToPetClient, {
   fetchValidatedData,
+  validatePetData,
 } from "../util/connect-to-pet-client";
 import PetList from "../components/pets/pet-list";
 import LoadingSpinner from "../components/ui/LoadingSpinner/loading-spinner";
 import classes from "../styles/Home.module.css";
 import Button from "../components/ui/Button/button";
+import useNotification from "../hooks/use-notification";
+import Notification from "../components/ui/Notification/notification";
 
 export default function HomePage({ pets }) {
   useAuth();
+  const { title, message, status: notiStatus } = useNotification();
+  console.log("Notification ", !!title, !!message, !!notiStatus);
   const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(true);
   const [loadedPets, setLoadedPets] = useState([]);
   const [loadingStatus, setLoadingStatus] = useState("Fetching Latest Pets...");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   const fetchData = useCallback(
-    async (page) => {
+    async (page, incompletePetArr) => {
       setLoadingStatus("Pets are being cleaned");
       const { cleanPetData, page: currPage } = await fetchValidatedData(
         session,
-        pets,
+        incompletePetArr,
         page
       );
       setPage(currPage);
       return cleanPetData;
     },
-    [pets, session]
+    [session]
   );
+
   useEffect(() => {
-    fetchData()
+    const cleanDataFromStaticProps = [];
+    if (pets && pets.length === 100) {
+      for (let pet of pets) {
+        if (cleanDataFromStaticProps.length >= 12) {
+          setLoadedPets(cleanDataFromStaticProps);
+          setIsLoading(false);
+          break;
+        }
+        if (validatePetData(pet)) {
+          cleanDataFromStaticProps.push(pet);
+        }
+      }
+    }
+    fetchData(page, cleanDataFromStaticProps)
       .then((pets) => {
         return setLoadedPets(pets);
       })
       .then((res) => setIsLoading(false));
-  }, [pets, fetchData]);
+  }, [pets, fetchData]); // adding page var would cause infinite calls
 
   const loadNextPageHandler = () => {
     setLoadingStatus("Sanitizing new data...");
@@ -54,6 +73,9 @@ export default function HomePage({ pets }) {
 
   return (
     <section className={classes.section}>
+      {title && message && notiStatus && (
+        <Notification title={title} message={message} status={notiStatus} />
+      )}
       <h1>Browse all</h1>
       {isLoading && <LoadingSpinner loadingText={loadingStatus} />}
       {!isLoading && <PetList pets={loadedPets} />}
@@ -75,7 +97,7 @@ export async function getStaticProps(context) {
     const client = connectToPetClient();
     try {
       const petResults = await client.animal.search({
-        limit: 12,
+        limit: 100,
       });
 
       return {
@@ -94,7 +116,7 @@ export async function getStaticProps(context) {
   } else {
     const client = connectToPetClient(session.user.accessToken);
     try {
-      const petResults = await client.animal.search({ limit: 12 });
+      const petResults = await client.animal.search({ limit: 100 });
       return {
         props: {
           pets: petResults.data.animals,

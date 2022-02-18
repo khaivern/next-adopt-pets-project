@@ -97,7 +97,7 @@ const Signup = () => {
       });
       if (!result.error) {
         // redirect and store
-        const expiration = new Date(new Date().getTime() + 30000);
+        const expiration = new Date(new Date().getTime() + 1000 * 60 * 45);
         dispatch(
           authActions.login({
             expiration: expiration.toISOString(),
