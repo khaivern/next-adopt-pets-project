@@ -1,16 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signOut } from "next-auth/react";
 
-const checkAndParseLS = (item) => {
-  return typeof window !== "undefined" &&
-    localStorage.getItem("userData") &&
-    localStorage.getItem("userData")[item]
-    ? JSON.parse(localStorage.getItem("userData")[item])
+const checkAndParseLS = () => {
+  return typeof window !== "undefined" && localStorage.getItem("expiration")
+    ? localStorage.getItem("expiration")
     : null;
 };
 
 const initialState = {
-  expiration: checkAndParseLS("expiration") || null,
+  expiration: checkAndParseLS(),
 };
 
 const authSlice = createSlice({
@@ -19,16 +17,11 @@ const authSlice = createSlice({
   reducers: {
     login(state, action) {
       state.expiration = action.payload.expiration;
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({
-          expiration: action.payload.expiration,
-        })
-      );
+      localStorage.setItem("expiration", action.payload.expiration);
     },
     logout(state, action) {
       state.expiration = null;
-      localStorage.removeItem("userData");
+      localStorage.removeItem("expiration");
       signOut();
     },
   },
