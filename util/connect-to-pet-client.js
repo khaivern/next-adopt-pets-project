@@ -3,7 +3,6 @@ const petfinder = require("@petfinder/petfinder-js");
 // Helper functions
 
 async function getAnimal(id, client) {
-  console.log(id);
   try {
     const resp = await client.animal.show(id);
     return resp.data.animal;
@@ -54,7 +53,6 @@ export const fetchSingleAnimal = async (session, id) => {
     const client = connectToPetClient(session.user.accessToken);
     return await getAnimal(id, client);
   } else {
-    console.log("Came here", id);
     const client = connectToPetClient();
     return await getAnimal(id, client);
   }

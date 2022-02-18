@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { comparePassword, getPetAccessToken } from "../../../util/auth";

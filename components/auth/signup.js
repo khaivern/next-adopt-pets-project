@@ -95,11 +95,9 @@ const Signup = () => {
         email: email.val,
         password: password.val,
       });
-      console.log(result);
       if (!result.error) {
         // redirect and store
-        console.log("sending dispatch from login component");
-        const expiration = new Date(new Date().getTime() + 30000);
+        const expiration = new Date(new Date().getTime() + 10000);
         dispatch(
           authActions.login({
             expiration: expiration.toISOString(),

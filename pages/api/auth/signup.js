@@ -59,6 +59,7 @@ async function handler(req, res) {
     email,
     name,
     password: hashedPW,
+    favouritePets: [],
   };
 
   let result;

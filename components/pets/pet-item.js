@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
@@ -5,6 +6,17 @@ import Button from "../ui/Button/button";
 import Card from "../ui/Card/card";
 
 import classes from "./pet-item.module.css";
+
+export const sendPetData = async (petData) => {
+  const resp = await axios({
+    url: "/api/user/favourites",
+    method: "POST",
+    data: petData,
+  });
+  const data = resp.data;
+
+  return { status: resp.status, data: data };
+};
 
 // layout="responsive"
 const PetItem = ({ pet }) => {
@@ -33,7 +45,18 @@ const PetItem = ({ pet }) => {
     year: "numeric",
   });
 
-  const addToFavouritesHandler = () => {};
+  const addToFavouritesHandler = () => {
+    const petData = {
+      image: pet.photos[0].large,
+      name: name,
+      type: pet.type,
+      species: pet.species,
+      adoptionSite: pet.url,
+      gender: pet.gender,
+      age: pet.age,
+    };
+    const { status, data } = sendPetData(petData);
+  };
 
   const petPath = `/pets/${pet.id}`;
   return (
@@ -85,7 +108,7 @@ const PetItem = ({ pet }) => {
           {session && !loading && (
             <div className={classes["pet-item__content--actions"]}>
               <Button type='button' onClick={addToFavouritesHandler}>
-                💝 ADD TO FAVOURITES 💝{" "}
+                💝 ADD TO FAVOURITES 💝
               </Button>
             </div>
           )}

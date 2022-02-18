@@ -5,9 +5,10 @@ import { fetchSingleAnimal } from "../../util/connect-to-pet-client";
 import LoadingSpinner from "../../components/ui/LoadingSpinner/loading-spinner";
 import Card from "../../components/ui/Card/card";
 import PetHeader from "../../components/pets/PetDetails/pet-header";
+import PetContent from "../../components/pets/PetDetails/pet-content";
 
 import classes from "./pet-detail.module.css";
-import PetContent from "../../components/pets/PetDetails/pet-content";
+import { sendPetData } from "../../components/pets/pet-item";
 
 const PetDetailPage = () => {
   const { data: session, status } = useSession();
@@ -22,7 +23,6 @@ const PetDetailPage = () => {
       if (pet.error) {
         return;
       }
-
       return pet;
     };
     fetchAnimal()
@@ -31,6 +31,20 @@ const PetDetailPage = () => {
       })
       .then((res) => setIsLoading(false));
   }, [pid, session]);
+
+  const favButtonHandler = () => {
+    const name = loadedPet.name.split(" ")[0];
+    const petData = {
+      image: loadedPet.photos[0].large,
+      name: name,
+      type: loadedPet.type,
+      species: loadedPet.species,
+      adoptionSite: loadedPet.url,
+      gender: loadedPet.gender,
+      age: loadedPet.age,
+    };
+    const { status, data } = sendPetData(petData);
+  };
 
   if (!loadedPet || isLoading || loading) {
     return <LoadingSpinner loadingText='fetching that little one 👀' />;
@@ -43,6 +57,7 @@ const PetDetailPage = () => {
         description={loadedPet.description}
         date={loadedPet.published_at}
         status={loadedPet.status}
+        onFavButtonClick={favButtonHandler}
       />
     </Card>
   );

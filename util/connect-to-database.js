@@ -16,7 +16,7 @@ export const connectToDatabase = async () => {
 export const fetchCollection = async () => {
   try {
     const client = await connectToDatabase();
-    const usersCollection = await client.db().collection("users").find();
+    const usersCollection = await client.db().collection("users");
     return usersCollection;
   } catch (err) {
     return {

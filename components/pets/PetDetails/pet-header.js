@@ -6,19 +6,13 @@ import classes from "./pet-header.module.css";
 
 const formatAddress = (address) => {
   const { address1, address2, city, state, postcode, country } = address;
-
   const wholeAddress = `${address1},${address2},${city},${state},${postcode},${country}`;
-
   const validAddress = wholeAddress.split(",").filter((val) => val !== "null");
   const formattedAddress = validAddress.join(", ");
-
-  console.log("valid address ", formattedAddress);
-
   return { formattedAddress, validAddress };
 };
 
 const PetHeader = ({ pet }) => {
-  console.log(pet);
   if (!pet) {
     return null;
   }
