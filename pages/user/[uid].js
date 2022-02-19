@@ -18,7 +18,7 @@ const UserPage = ({ pets }) => {
 
 export default UserPage;
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const { uid } = context.params;
   const usersCollection = await fetchCollection();
   let user;
@@ -33,20 +33,11 @@ export async function getStaticProps(context) {
       props: {
         pets: [],
       },
-      revalidate: 3600,
     };
   }
   return {
     props: {
       pets: user.favouritePets,
     },
-    revalidate: 3600,
-  };
-}
-
-export async function getStaticPaths(context) {
-  return {
-    paths: [],
-    fallback: "blocking",
   };
 }

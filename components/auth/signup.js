@@ -121,7 +121,7 @@ const Signup = () => {
       )}
       {error && <ErrorModal error={error} onClear={clearError} />}
       <Card className={classes["auth-card"]}>
-        <h1>LOGIN</h1>
+        <h1>{isLoginMode ? "LOGIN" : "SIGNUP"}</h1>
         <hr />
         <form onSubmit={authHandler}>
           {!isLoginMode && (
