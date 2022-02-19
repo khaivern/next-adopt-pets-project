@@ -23,7 +23,7 @@ const Notification = (props) => {
 
   if (typeof window !== "undefined") {
     return ReactDOM.createPortal(
-      <div className={cssClasses}>
+      <div className={cssClasses} onClick={props.onClick}>
         <h2>{title}</h2>
         <p>{message}</p>
       </div>,
@@ -31,7 +31,7 @@ const Notification = (props) => {
     );
   } else {
     return (
-      <div className={cssClasses}>
+      <div className={cssClasses} onClick={props.onClick}>
         <h2>{title}</h2>
         <p>{message}</p>
       </div>

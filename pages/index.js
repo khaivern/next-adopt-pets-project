@@ -15,8 +15,12 @@ import Notification from "../components/ui/Notification/notification";
 
 export default function HomePage({ pets }) {
   useAuth();
-  const { title, message, status: notiStatus } = useNotification();
-  console.log("Notification ", !!title, !!message, !!notiStatus);
+  const {
+    title,
+    message,
+    status: notiStatus,
+    clearNotification,
+  } = useNotification();
   const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(true);
   const [loadedPets, setLoadedPets] = useState([]);
@@ -74,7 +78,12 @@ export default function HomePage({ pets }) {
   return (
     <section className={classes.section}>
       {title && message && notiStatus && (
-        <Notification title={title} message={message} status={notiStatus} />
+        <Notification
+          title={title}
+          message={message}
+          status={notiStatus}
+          onClick={clearNotification}
+        />
       )}
       <h1>Browse all</h1>
       {isLoading && <LoadingSpinner loadingText={loadingStatus} />}

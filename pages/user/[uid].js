@@ -1,26 +1,17 @@
 import { ObjectId } from "mongodb";
-import React from "react";
+import React, { useState } from "react";
 import FavouriteList from "../../components/user/FavouriteList/favourite-list";
 import { fetchCollection } from "../../util/connect-to-database";
 
-const DUMMY_PETS = [
-  {
-    name: "Saff",
-    image:
-      "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/54665242/1/?bust=1645163974&width=600",
-    type: "Cat",
-    species: "Cat",
-    adoptionSite:
-      "https://www.petfinder.com/cat/saffron-together-with-brother-cashew-54665242/il/glenview/lucky-whiskers-rescue-il982/?referrer_id=22646517-e055-4538-b052-f0f9891bce61",
-    gender: "Female",
-    age: "Baby",
-  },
-];
-
 const UserPage = ({ pets }) => {
+  const [loadedPets, setLoadedPets] = useState(pets);
+  const removePetHandler = (petId) => {
+    setLoadedPets((curr) => curr.filter((pet) => pet.id !== petId));
+  };
+
   return (
     <section style={{ marginTop: "2rem" }}>
-      <FavouriteList pets={pets || DUMMY_PETS} />
+      <FavouriteList pets={loadedPets} onRemovePet={removePetHandler} />
     </section>
   );
 };

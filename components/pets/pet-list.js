@@ -2,14 +2,18 @@ import React, { Fragment } from "react";
 import PetItem from "./pet-item";
 import { v4 as uuid } from "uuid";
 import classes from "./pet-list.module.css";
+import Card from "../ui/Card/card";
 
 const PetList = ({ pets }) => {
   if (pets && pets.length === 0) {
     return (
-      <div className='center'>
-        <h2>No Pets found!</h2>
-        <p>Try again later</p>
-      </div>
+      <Card>
+        <div className='center'>
+          <h2>
+            No pets found or API quota is finished, please try again tomorrow.
+          </h2>
+        </div>
+      </Card>
     );
   }
   if (pets && pets.length > 12) {

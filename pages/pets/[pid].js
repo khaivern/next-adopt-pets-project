@@ -6,14 +6,13 @@ import LoadingSpinner from "../../components/ui/LoadingSpinner/loading-spinner";
 import Card from "../../components/ui/Card/card";
 import PetHeader from "../../components/pets/PetDetails/pet-header";
 import PetContent from "../../components/pets/PetDetails/pet-content";
+import useNotification from "../../hooks/use-notification";
 
 import classes from "./pet-detail.module.css";
-import { sendPetData } from "../../components/pets/pet-item";
-import { useDispatch } from "react-redux";
-import { notiActions } from "../../store/notification-slice";
 
 const PetDetailPage = () => {
-  const dispatch = useDispatch();
+  const { sendPetData } = useNotification();
+
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const { pid } = useRouter().query;
@@ -36,15 +35,9 @@ const PetDetailPage = () => {
   }, [pid, session]);
 
   const favButtonHandler = () => {
-    dispatch(
-      notiActions.createNotification({
-        title: "Sending",
-        message: "this pet data is being sent to your favourite's list",
-        status: "pending",
-      })
-    );
     const name = loadedPet.name.split(" ")[0];
     const petData = {
+      id: loadedPet.id,
       image: loadedPet.photos[0].large,
       name: name,
       type: loadedPet.type,
@@ -54,25 +47,7 @@ const PetDetailPage = () => {
       age: loadedPet.age,
     };
 
-    const { status, data } = sendPetData(petData);
-    if (status !== 201) {
-      dispatch(
-        notiActions.createNotification({
-          title: "Not Good 😥",
-          message:
-            "the pet managed to escape our grip sadly... please try again later",
-          status: "error",
-        })
-      );
-    } else {
-      dispatch(
-        notiActions.createNotification({
-          title: "Success ✔",
-          message: "The pet data is now stored safely",
-          status: "success",
-        })
-      );
-    }
+    const status = sendPetData(petData);
   };
 
   if (!loadedPet || isLoading || loading) {

@@ -1,13 +1,12 @@
 import Link from "next/link";
 import React from "react";
-import PetItem from "../../pets/pet-item";
 import Button from "../../ui/Button/button";
 import Card from "../../ui/Card/card";
 import FavouriteItem from "../FavouriteItem/favourite-item";
-
+import { v4 as uuid } from "uuid";
 import classes from "./favourite-list.module.css";
 
-const FavouriteList = ({ pets }) => {
+const FavouriteList = ({ pets, onRemovePet }) => {
   if (pets.length === 0) {
     return (
       <Card>
@@ -26,7 +25,11 @@ const FavouriteList = ({ pets }) => {
     <Card>
       <ul className={classes.list}>
         {pets.map((pet) => (
-          <FavouriteItem key={pet.id} pet={pet} />
+          <FavouriteItem
+            key={pet.id + "-" + uuid()}
+            pet={pet}
+            onRemovePet={onRemovePet}
+          />
         ))}
       </ul>
     </Card>

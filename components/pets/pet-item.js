@@ -1,28 +1,15 @@
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { notiActions } from "../../store/notification-slice";
+import useNotification from "../../hooks/use-notification";
 import Button from "../ui/Button/button";
 import Card from "../ui/Card/card";
 
 import classes from "./pet-item.module.css";
 
-export const sendPetData = async (petData) => {
-  const resp = await axios({
-    url: "/api/user/favourites",
-    method: "POST",
-    data: petData,
-  });
-  const data = resp.data;
-
-  return { status: resp.status, data: data };
-};
-
 // layout="responsive"
 const PetItem = ({ pet }) => {
-  const dispatch = useDispatch();
+  const { sendPetData } = useNotification();
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const shortenedDescription = () => {
@@ -49,14 +36,8 @@ const PetItem = ({ pet }) => {
   });
 
   const addToFavouritesHandler = () => {
-    dispatch(
-      notiActions.createNotification({
-        title: "Sending",
-        message: "this pet data is being sent to your favourite's list",
-        status: "pending",
-      })
-    );
     const petData = {
+      id: pet.id,
       image: pet.photos[0].large,
       name: name,
       type: pet.type,
@@ -65,25 +46,7 @@ const PetItem = ({ pet }) => {
       gender: pet.gender,
       age: pet.age,
     };
-    const { status, data } = sendPetData(petData);
-    if (status !== 201) {
-      dispatch(
-        notiActions.createNotification({
-          title: "Not Good 😥",
-          message:
-            "the pet managed to escape our grip sadly... please try again later",
-          status: "error",
-        })
-      );
-    } else {
-      dispatch(
-        notiActions.createNotification({
-          title: "Success ✔",
-          message: "The pet data is now stored safely",
-          status: "success",
-        })
-      );
-    }
+    const status = sendPetData(petData);
   };
 
   const petPath = `/pets/${pet.id}`;

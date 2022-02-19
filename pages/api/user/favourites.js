@@ -31,8 +31,8 @@ async function handler(req, res) {
     });
   }
 
-  const { image, name, type, species, adoptionSite, gender, age } = req.body;
-  const pet2 = req.body;
+  const { image, name, type, species, adoptionSite, gender, age, id } =
+    req.body;
   let usersCollection;
   try {
     usersCollection = await fetchCollection();
@@ -62,6 +62,7 @@ async function handler(req, res) {
   }
 
   const newFavouritePet = {
+    id,
     name,
     image,
     type,
